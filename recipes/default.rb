@@ -39,7 +39,7 @@ when "ubuntu"
     components ["contrib"]
     action :add
   end
-when "centos", "redhat"
+when "centos", "redhat", "amazon"
   yum_repository "treasure-data" do
     url "http://packages.treasure-data.com/redhat/$basearch"
     action :add
@@ -52,11 +52,12 @@ template "/etc/td-agent/td-agent.conf" do
 end
 
 package "td-agent" do
-  options "-f --force-yes"
+#  options "-f --force-yes"
   action :upgrade
 end
 
 service "td-agent" do
-  action [ :enable, :start ]
+#  action [ :enable, :start ]
+  action [ :enable ]
   subscribes :restart, resources(:template => "/etc/td-agent/td-agent.conf")
 end
