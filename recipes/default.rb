@@ -59,6 +59,7 @@ package "td-agent" do
 end
 
 service "td-agent" do
+  not_if {File.exists?("/etc/init.d/td-agent")}
 #  action [ :enable, :start ]
   action [ :enable ]
   subscribes :restart, resources(:template => "/etc/td-agent/td-agent.conf")
