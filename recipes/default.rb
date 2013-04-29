@@ -6,12 +6,14 @@
 #
 
 group 'td-agent' do
+  not_if {File.exists?("/var/run/td-agent")}
   group_name 'td-agent'
   gid        403
   action     [:create]
 end
 
 user 'td-agent' do
+  not_if {File.exists?("/var/run/td-agent")}
   comment  'td-agent'
   uid      403
   group    'td-agent'
